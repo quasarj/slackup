@@ -4,9 +4,12 @@ from django.db import models
 class Channel(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
     name = models.CharField(max_length=22)
-    topic = models.TextField()
-    purpose = models.TextField()
-    is_archived = models.BooleanField()
+    topic = models.TextField(null=True)
+    purpose = models.TextField(null=True)
+    is_archived = models.NullBooleanField()
+
+    def __str__(self):
+        return self.name
 
 class SUser(models.Model):
     id = models.CharField(max_length=10, primary_key=True)

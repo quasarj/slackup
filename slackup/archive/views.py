@@ -32,8 +32,19 @@ def process_archive(archive):
             u.name = user['name']
             u.color = user['color']
             if 'image_original' in user['profile']:
-                u.image = user['profile']['image_original'].replace('original', '\{\}')
+                u.image = user['profile']['image_original'].replace('original', '{}')
             if 'title' in user['profile']:
                 u.title = user['profile']['title']
             u.real_name = user['real_name']
             u.save()
+    with open('to_process/channels.json') as channel_json:
+        channels = json.load(channel_json)
+        for channel in channels:
+            c, created = Channel.objects.get_or_create(pk=channel['id'])
+            c.name = channel['name']
+            c.is_archived = channel['is_archived']
+            if 'value' in channel['topic']:
+                c.topic = channel['topic']['value']
+            if 'value' in channel['purpose']:
+                c.purpose = channel['purpose']['value']
+            c.save()
