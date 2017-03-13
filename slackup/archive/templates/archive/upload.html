@@ -1,0 +1,11 @@
+<html>
+    <body>
+        <form action="{% url 'upload_archive' %}"
+              enctype="multipart/form-data"
+              method="post">
+            {% csrf_token %}
+            {{ form.file }}
+            <input type="submit" value="Upload" />
+        </form>
+    </body>
+</html>
