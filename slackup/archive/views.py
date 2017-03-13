@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 from zipfile import ZipFile
 from archive.models import *
 import json
+import os
 
 # Create your views here.
 class UploadFileForm(forms.Form):
@@ -48,3 +49,18 @@ def process_archive(archive):
             if 'value' in channel['purpose']:
                 c.purpose = channel['purpose']['value']
             c.save()
+    for root, dirs, files in os.walk('to_process'):
+        if root != 'to_process':
+            c = Channel.objects.get(name=os.path.basename(root))
+            users = {}
+            for u in SUser.objects.all():
+                users[u.id] = u
+            for f in files:
+                with open(f) as day_file:
+                    m = json.load(day_file)
+                    ts_hash = t
+                    message = Message.objects.create()
+                    message.user = users[m['user']]
+                    message.text = m['text']
+                    message.channel = c
+                    message.save()
