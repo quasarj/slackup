@@ -27,8 +27,10 @@ class SUser(models.Model):
 
 class File(models.Model):
     id = models.CharField(max_length=10, primary_key=True)
-    name = models.CharField(max_length=100)
-    title = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, null=True)
+    title = models.CharField(max_length=100, null=True)
+    url = models.CharField(max_length=250)
+    filetype = models.CharField(max_length=10)
 
 class Message(models.Model):
     id = models.CharField(max_length=20, primary_key=True)

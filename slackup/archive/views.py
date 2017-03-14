@@ -34,7 +34,7 @@ def channel_full(request, channel_name):
     for message in messages:
         message.prev = prev
         prev = message.user
-        
+
     d = {}
     d['users'] = SUser.objects.all()
     d['messages'] = messages
@@ -90,6 +90,17 @@ def process_channels(channel_json):
             c.purpose = channel['purpose']['value']
         c.save()
 
+def process_file(file_share):
+    f, created = File.object.get_or_create(pk=file_share['id'],
+                                           url=file_share['url_private'],
+                                           filetype=file_share['filetype'])
+    if 'name' in file_share:
+        f.name = file_share['name']
+    if 'title' in file_share:
+        f.title = file_share['title']
+    f.save()
+    return f
+
 def process_message_day(messages, users, c):
     for m in messages:
         if normally_formed(m, users):
@@ -100,6 +111,9 @@ def process_message_day(messages, users, c):
                                                              text = m['text'],
                                                              timestamp = time,
                                                              channel = c)
+            if 'subtype' in m and m['subtype'] == 'file_share':
+                message.file_upload = process_file(m['file'])
+                message.save()
 
 def process_archive(archive):
     with open('archive.zip', 'wb+') as dest:
