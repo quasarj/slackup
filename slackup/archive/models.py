@@ -31,6 +31,10 @@ class File(models.Model):
     title = models.CharField(max_length=100, null=True)
     url = models.CharField(max_length=250)
     filetype = models.CharField(max_length=10)
+    self_hosted = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.id
 
 class Message(models.Model):
     id = models.CharField(max_length=20, primary_key=True)

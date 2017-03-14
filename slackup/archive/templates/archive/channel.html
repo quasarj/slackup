@@ -2,43 +2,12 @@
 
 {% block title %}{{channel.name}}{% endblock %}
 
-{% block styles %}
-<link href="https://cdx.slack-edge.com/b2211/style/typography.css"
-      rel="stylesheet"
-      type="text/css"
-      crossorigin="anonymous">
-<link href="https://cdx.slack-edge.com/73f09/style/rollup-client_general.css"
-      rel="stylesheet"
-      type="text/css"
-      crossorigin="anonymous">
-<link href="https://cdx.slack-edge.com/b5740/style/rollup-client_secondary.css"
-      rel="stylesheet"
-      type="text/css"
-      crossorigin="anonymous">
-<style>
-    a {
-        text-decoration: none;
-    }
-</style>
-{% endblock %}
-
 {% block content %}
-<div class="pagination">
-    <span class="step-links">
-        {% if messages.has_previous %}
-            <a href="?page={{ messages.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ messages.number }} of {{ messages.paginator.num_pages }}.
-        </span>
-
-        {% if messages.has_next %}
-            <a href="?page={{ messages.next_page_number }}">next</a>
-        {% endif %}
-    </span>
+<div class="channel_title">
+    <div id="channel_name_container" class="channel_name_continer">
+        <span id="channel_name" class="channel_name">#{{ channel.name }}</span>
+    </div>
 </div>
-
 <div class="messages_container dense_theme">
     {% for m in messages %}
     <ts-message class="message {% if m.user != m.prev %}first{% endif %}">
@@ -59,5 +28,20 @@
         </div>
     </ts-message>
     {% endfor %}
+</div>
+<div class="pagination">
+    <span class="step-links">
+        {% if messages.has_previous %}
+            <a href="?page={{ messages.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ messages.number }} of {{ messages.paginator.num_pages }}.
+        </span>
+
+        {% if messages.has_next %}
+            <a href="?page={{ messages.next_page_number }}">next</a>
+        {% endif %}
+    </span>
 </div>
 {% endblock %}

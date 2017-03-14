@@ -9,12 +9,21 @@ import os
 from datetime import datetime, timezone
 
 # Create your views here.
+class MessageSearchForm(forms.Form):
+    text = forms.CharField()
+
+def base_context(request):
+    d = {}
+    d['channels'] = Channel.objects.all()
+    d['users'] = SUser.objects.all()
+
+    search = MessageSearchForm()
+    d['search_form'] = search
+    return d
 
 def home(request):
     d = {}
     d['message_count'] = Message.objects.count()
-    d['channels'] = Channel.objects.all()
-    d['users'] = SUser.objects.all()
     return render(request, 'archive/home.html', d)
 
 def channel_full(request, channel_name):
@@ -36,13 +45,19 @@ def channel_full(request, channel_name):
         prev = message.user
 
     d = {}
-    d['users'] = SUser.objects.all()
     d['messages'] = messages
     d['channel'] = channel
     return render(request, 'archive/channel.html', d)
 
 class UploadFileForm(forms.Form):
     file = forms.FileField()
+
+def search(request):
+    if request.method == 'POST':
+        form = MessageSearchForm(request.POST)
+        if form.is_valid():
+            print(request)
+    return HttpResponseRedirect('/')
 
 def upload_archive(request):
     if request.method == 'POST':
@@ -91,7 +106,7 @@ def process_channels(channel_json):
         c.save()
 
 def process_file(file_share):
-    f, created = File.object.get_or_create(pk=file_share['id'],
+    f, created = File.objects.get_or_create(pk=file_share['id'],
                                            url=file_share['url_private'],
                                            filetype=file_share['filetype'])
     if 'name' in file_share:

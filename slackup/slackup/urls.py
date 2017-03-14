@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^$', home, name='home'),
     url(r'^channel/(?P<channel_name>.+)', channel_full, name='channel'),
     url(r'^upload/', upload_archive, name='upload_archive'),
+    url(r'^search/', search, name='search'),
     url(r'^admin/', admin.site.urls),
 ]

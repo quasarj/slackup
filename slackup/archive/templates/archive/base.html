@@ -2,11 +2,116 @@
 <html>
     <head>
         <title>{% block title %}{% endblock %}</title>
-        {% block styles %}
-        {% endblock %}
+        <link href="https://cdx.slack-edge.com/b2211/style/typography.css"
+              rel="stylesheet"
+              type="text/css"
+              crossorigin="anonymous">
+        <link href="https://cdx.slack-edge.com/73f09/style/rollup-client_general.css"
+              rel="stylesheet"
+              type="text/css"
+              crossorigin="anonymous">
+        <link href="https://cdx.slack-edge.com/b5740/style/rollup-client_secondary.css"
+              rel="stylesheet"
+              type="text/css"
+              crossorigin="anonymous">
+        <style>
+            a {
+                text-decoration: none;
+            }
+            .client_container {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-flex: 1;
+                -webkit-flex-grow: 1;
+                -moz-flex-grow: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+                overflow: hidden;
+            }
+            .client_channels_list_container {
+                position: relative;
+                width: 13.75rem;
+                max-width: 260px;
+                -ms-flex: 0 0 13.75rem;
+                -webkit-flex: 0 0 13.75rem;
+                flex: 0 0 13.75rem;
+                background-color: #F8F8FA;
+            }
+            .client_main_container {
+                position: relative;
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -moz-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -ms-flex-direction: column;
+                -moz-flex-direction: column;
+                -webkit-flex-direction: column;
+                flex-direction: column;
+                -webkit-box-flex: 1;
+                -webkit-flex-grow: 1;
+                -moz-flex-grow: 1;
+                -ms-flex-positive: 1;
+                flex-grow: 1;
+                min-width: 0;
+            }
+            .channel_title {
+                -webkit-flex: 0;
+                flex: 0;
+                margin-bottom: 5px;
+            }
+        </style>
     </head>
     <body>
-        {% block content %}
-        {% endblock %}
+        <div class="client_container">
+            <div class="client_channels_list_container">
+                <div id="col_channels_bg" style="z-index: 0;"></div>
+                <div id="team_menu">
+                    <form method="post"
+                          action="{% url 'search' %}"
+                          id="header_search_form"
+                          class="search_form no_bottom_margin">
+                        {% csrf_token %}
+                        <input type="text"
+                               id="id_text"
+                               name="text"
+                               class="search_input"
+                               placeholder="Search"
+                               autocomplete="off"
+                               maxlength="250">
+    				</form>
+                    <div id="team_menu_user">
+                        <a href="{% url 'admin:index' %}">
+                            <span id="team_menu_user_name">admin</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="channels_list_holder">
+                    <div class="selection_holder">
+                        <ul id="channel-list">
+                            {% for c in channels %}
+                            <li class="channel">
+                                <a class="channel_name"
+                                   href="{% url 'channel' c.name %}">
+                                   <span class="display_flex">
+                                       <span class="overflow_ellipsis">
+                                           #{{ c.name }}
+                                       </span>
+                                   </span>
+                               </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="client_main_container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
     </body>
 </html>
