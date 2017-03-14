@@ -6,7 +6,7 @@ class Channel(models.Model):
     name = models.CharField(max_length=22)
     topic = models.TextField(null=True)
     purpose = models.TextField(null=True)
-    is_archived = models.NullBooleanField()
+    is_archived = models.BooleanField()
 
     def __str__(self):
         return self.name
@@ -31,9 +31,10 @@ class File(models.Model):
     title = models.CharField(max_length=100)
 
 class Message(models.Model):
+    id = models.CharField(max_length=20, primary_key=True)
     user = models.ForeignKey(SUser)
     channel = models.ForeignKey(Channel)
-    timestap = models.DateTimeField()
+    timestamp = models.DateTimeField()
     text = models.TextField()
     file_upload = models.ForeignKey(File, null=True)
 

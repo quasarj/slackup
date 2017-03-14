@@ -1,0 +1,17 @@
+{% extends "archive/base.html" %}
+{% load humanize %}
+
+{% block title %}Slackup{% endblock %}
+
+{% block content %}
+<p>Total messages loaded: {{ message_count|intcomma }}</p>
+<a href="{% url 'upload_archive' %}">Upload New Archive</a>
+
+<ul>
+    {% for channel in channels %}
+    <li>
+        <a href="{% url 'channel' channel.name %}">{{ channel.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
