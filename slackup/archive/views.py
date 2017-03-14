@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django import forms
 from django.http import HttpResponseRedirect
@@ -14,9 +15,12 @@ class MessageSearchForm(forms.Form):
 
 def base_context(request):
     d = {}
-    d['channels'] = Channel.objects.all()
-    d['users'] = SUser.objects.all()
-
+    if request.user.is_authenticated():
+        d['channels'] = Channel.objects.all()
+        d['users'] = SUser.objects.all()
+    else:
+        d['channels'] = []
+        d['users'] = []
     search = MessageSearchForm()
     d['search_form'] = search
     return d
@@ -26,6 +30,7 @@ def home(request):
     d['message_count'] = Message.objects.count()
     return render(request, 'archive/home.html', d)
 
+@login_required
 def channel_full(request, channel_name):
     channel = Channel.objects.get(name=channel_name)
     all_messages = Message.objects.filter(channel=channel)
@@ -52,6 +57,7 @@ def channel_full(request, channel_name):
 class UploadFileForm(forms.Form):
     file = forms.FileField()
 
+@login_required
 def search(request):
     if request.method == 'POST':
         form = MessageSearchForm(request.POST)
@@ -63,6 +69,7 @@ def search(request):
                                                            'num_results': len(messages)})
     return HttpResponseRedirect('/')
 
+@login_required
 def upload_archive(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)

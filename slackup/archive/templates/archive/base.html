@@ -91,9 +91,11 @@
                                maxlength="250">
     				</form>
                     <div id="team_menu_user">
-                        <a href="{% url 'admin:index' %}">
-                            <h2 id="channels_header">admin</h2>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}">
+                            <h2 id="channels_header">logout</h2>
                         </a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="channels_list_holder">

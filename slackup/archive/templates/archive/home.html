@@ -4,6 +4,15 @@
 {% block title %}Slackup{% endblock %}
 
 {% block content %}
-<p>Total messages loaded: {{ message_count|intcomma }}</p>
-<a href="{% url 'upload_archive' %}">Upload New Archive</a>
+<div style="margin:15px">
+    {% if user.is_authenticated %}
+    <p>Total messages loaded: {{ message_count|intcomma }}</p>
+    <a href="{% url 'upload_archive' %}">Upload New Archive</a>
+    <small>Don't touch this if you don't know what you are doing.</small>
+    {% else %}
+    <a href="{% url 'login' %}">
+        <h2>Login</h2>
+    </a>
+    {% endif %}
+</div>
 {% endblock %}
