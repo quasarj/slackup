@@ -18,6 +18,13 @@
             a {
                 text-decoration: none;
             }
+            a.channel_name {
+                color: #84888d;
+            }
+            .channel_list {
+                margin-top: 5px;
+                padding-left: 5px;
+            }
             .client_container {
                 display: -webkit-box;
                 display: -webkit-flex;
@@ -85,13 +92,14 @@
     				</form>
                     <div id="team_menu_user">
                         <a href="{% url 'admin:index' %}">
-                            <span id="team_menu_user_name">admin</span>
+                            <h2 id="channels_header">admin</h2>
                         </a>
                     </div>
                 </div>
                 <div class="channels_list_holder">
                     <div class="selection_holder">
-                        <ul id="channel-list">
+                        <h2 id="channels_header">channels</h2>
+                        <ul id="channel-list" class="channel_list">
                             {% for c in channels %}
                             <li class="channel">
                                 <a class="channel_name"

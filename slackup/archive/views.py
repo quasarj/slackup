@@ -56,7 +56,11 @@ def search(request):
     if request.method == 'POST':
         form = MessageSearchForm(request.POST)
         if form.is_valid():
-            print(request)
+            search_term = form.cleaned_data['text']
+            messages = Message.objects.filter(text__icontains=search_term)
+            return render(request, 'archive/search.html', {'messages': messages,
+                                                           'search_term': search_term,
+                                                           'num_results': len(messages)})
     return HttpResponseRedirect('/')
 
 def upload_archive(request):

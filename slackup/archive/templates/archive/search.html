@@ -1,0 +1,48 @@
+{% extends "archive/base.html" %}
+{% load humanize %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<header id="client_header">
+    <div class="channel_title">
+        <div class="channel_name_container" id="channel_name_container">
+            <span id="channel_name" class="channel_name">Search results: {{ search_term }}</span>
+        </div>
+    </div>
+    <div class="channel_header_info">
+        <span class="channel_header_info_item" >{{ num_results|intcomma }} found.</span>
+    </div>
+</header>
+{% for m in messages %}
+<a href="" class="search_message_result message_container dense_theme">
+    <div class="search_message_result_meta display_flex black indifferent_grey align_items_end">
+        <div class="small_right_margin">
+            <strong class="overflow_ellipsis">
+                <span class="channel_link">#{{m.channel}}</span>
+            </strong>
+        </div>
+    </div>
+    <div class="search_message_result_text">
+        <div class="search_message_result_with_extract">
+            <ts-message class="message {% if m.user != m.prev %}first{% endif %}">
+                <div class="message_gutter">
+                    <span class="timestamp">{{ m.timestamp | date:"g:i A" }}</span>
+                </div>
+                <div class="message_content">
+                    <div class="message_content_header">
+                        <div class="message_content_header_left">
+                            <span class="message_sender member"
+                                  style="color:#{{m.user.color}}">{{ m.user.name }}</span>
+                         </div>
+                    </div>
+                    <span class="message_body">
+                        {{ m.text }}
+                    </span>
+                </div>
+            </ts-message>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endblock %}

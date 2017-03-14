@@ -3,11 +3,16 @@
 {% block title %}{{channel.name}}{% endblock %}
 
 {% block content %}
-<div class="channel_title">
-    <div id="channel_name_container" class="channel_name_continer">
-        <span id="channel_name" class="channel_name">#{{ channel.name }}</span>
+<header id="client_header">
+    <div class="channel_title">
+        <div id="channel_name_container" class="channel_name_continer">
+            <span id="channel_name" class="channel_name">#{{ channel.name }}</span>
+        </div>
     </div>
-</div>
+    <div class="channel_header_info">
+        <span class="channel_header_info_item">{{ channel.topic }} | {{ channel.purpose }}</span>
+    </div>
+</header>
 <div class="messages_container dense_theme">
     {% for m in messages %}
     <ts-message class="message {% if m.user != m.prev %}first{% endif %}">
