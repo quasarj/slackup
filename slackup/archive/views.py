@@ -33,7 +33,7 @@ def home(request):
 @login_required
 def channel_full(request, channel_name):
     channel = Channel.objects.get(name=channel_name)
-    all_messages = Message.objects.filter(channel=channel)
+    all_messages = Message.objects.filter(channel=channel).order_by('timestamp')
     paginator = Paginator(all_messages, 1000)
 
     page = request.GET.get('page')
