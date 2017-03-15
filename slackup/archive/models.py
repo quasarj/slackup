@@ -37,7 +37,7 @@ class File(models.Model):
         return self.id
 
 class Message(models.Model):
-    id = models.CharField(max_length=20, primary_key=True)
+    id = models.CharField(max_length=50, primary_key=True)
     user = models.ForeignKey(SUser)
     channel = models.ForeignKey(Channel)
     timestamp = models.DateTimeField()
