@@ -1,4 +1,5 @@
 {% extends 'archive/base.html' %}
+{% load slackify %}
 
 {% block title %}{{channel.name}}{% endblock %}
 
@@ -28,7 +29,9 @@
                  </div>
             </div>
             <span class="message_body">
-                {{ m.text }}
+                {% autoescape off %}
+                {% slackify m.text users channels %}
+                {% endautoescape %}
             </span>
         </div>
     </ts-message>

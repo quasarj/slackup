@@ -1,5 +1,6 @@
 {% extends "archive/base.html" %}
 {% load humanize %}
+{% load slackify %}
 
 {% block title %}Search Results{% endblock %}
 
@@ -37,7 +38,9 @@
                          </div>
                     </div>
                     <span class="message_body">
-                        {{ m.text }}
+                        {% autoescape off %}
+                        {% slackify m.text users channels %}
+                        {% endautoescape %}
                     </span>
                 </div>
             </ts-message>
