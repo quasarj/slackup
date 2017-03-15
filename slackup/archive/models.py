@@ -17,7 +17,7 @@ class SUser(models.Model):
     color = models.CharField(max_length=6)
     real_name = models.CharField(max_length=50)
     image = models.CharField(max_length=100, null=True)
-    title = models.CharField(max_length=50, null=True)
+    title = models.TextField(null=True)
 
     def __str__(self):
         return self.name
