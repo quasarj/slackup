@@ -16,7 +16,7 @@ class MessageSearchForm(forms.Form):
 def base_context(request):
     d = {}
     if request.user.is_authenticated():
-        d['channels'] = Channel.objects.all()
+        d['channels'] = Channel.objects.all().order_by('name')
         d['users'] = SUser.objects.all()
     else:
         d['channels'] = []

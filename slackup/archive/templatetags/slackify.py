@@ -24,7 +24,7 @@ def fix_links(matchobj):
     return format_html('<a target="_" href="{}">{}</a>',
                        link, link)
 
-user_re = r'<@(\w+)>'
+user_re = r'<@(\w+)[|]?[^>]*>'
 channel_re = r'<#(\w+)'
 link_re = r'<(http[^>]+)>'
 
